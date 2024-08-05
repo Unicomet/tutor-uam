@@ -12,7 +12,7 @@ const FilterSection: React.FC = () => {
   ];
 
   return (
-    <section>
+    <section className="flex flex-col">
       <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full">
         Filtrar por materia
       </h2>
@@ -20,20 +20,20 @@ const FilterSection: React.FC = () => {
         <option disabled selected>
           Selecciona una materia
         </option>
-        <option>Calculo</option>
+        <option>Cálculo</option>
         <option>Algebra</option>
       </select>
-      <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full">
+      {/* <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full">
         Filtrar por disponibilidad
       </h2>
       <div className="flex flex-wrap gap-3 content-start py-3 pr-4  mt-2 max-w-full text-sm font-medium leading-5 text-center text-neutral-900 w-[960px] max-md:pr-5">
         {availabilityOptions.map((option, index) => (
-          <button className="btn btn-sm" key={index}>
+          <button className="btn btn-sm " key={index}>
             {option}
           </button>
         ))}
-      </div>
-      <button className="btn btn-sm bg-blue-600 text-white mt-4 text-ellipsis ">
+      </div> */}
+      <button className="btn btn-md bg-blue-600 text-white mt-8 text-ellipsis w-44">
         Aplicar filtros
       </button>
     </section>

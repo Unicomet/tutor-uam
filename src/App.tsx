@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import Login from "./components/Login/Login";
 import TutorSearch from "./components/TutorSearch/TutorSearch";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CommunityForm from "./components/JoinCommunity/CommunityForm";
+import RegistrateSubjects from "./components/RegistrateSubjects/RegistrateSubjects";
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
             <Route path="/iniciar-sesion" element={<Login />} />
             <Route path="/crear-cuenta" element={<CreateAccount />} />
             <Route path="/buscar-tutor" element={<TutorSearch />} />
+            <Route path="/comunidad-formulario" element={<CommunityForm />} />
+            <Route path="/registro-tutor" element={<RegistrateSubjects />} />
           </Routes>
         </div>
         <Footer />

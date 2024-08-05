@@ -51,8 +51,8 @@ const tutors: Tutor[] = [
 
 const TutorList: React.FC = () => {
   return (
-    <section className="flex flex-col  pt-4 pb-2 mt-3 w-full leading-[150%] max-w-[960px] max-md:max-w-full">
-      <h2 className="text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full ">
+    <section className="flex flex-col  pt-4 pb-2 mt-8 w-full leading-[150%] max-w-[960px] max-md:max-w-full">
+      <h2 className="text-xl font-bold text-neutral-900 max-md:max-w-full ">
         Resultados de la búsqueda
       </h2>
       {tutors.map((tutor, index) => (

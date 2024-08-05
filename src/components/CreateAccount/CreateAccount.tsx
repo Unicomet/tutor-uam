@@ -3,12 +3,17 @@ import Header from "./Header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  name: z.string().min(3),
-  firstName: z.string().min(3),
+  email: z
+    .string()
+    .email({ message: "Usa un correo institucional de la UAM válido" }),
+  password: z
+    .string()
+    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
+  name: z.string().min(3, { message: "Escribe un nombre válido" }),
+  firstName: z.string().min(3, { message: "Escribe un apellido válido" }),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -24,10 +29,13 @@ const CreateAccount: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log(data);
+      navigate("/comunidad-formulario");
     } catch (error) {
       setError("root", {
         message: "This email is already taken",
@@ -54,7 +62,7 @@ const CreateAccount: React.FC = () => {
               <input
                 {...register("email")}
                 type="text"
-                placeholder="Email"
+                placeholder="correo institucional"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.email && (
@@ -68,6 +76,7 @@ const CreateAccount: React.FC = () => {
               <input
                 {...register("password")}
                 type="password"
+                placeholder="contraseña"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.password && (
@@ -81,7 +90,8 @@ const CreateAccount: React.FC = () => {
               </label>
               <input
                 {...register("name")}
-                type="password"
+                type="text"
+                placeholder="nombre"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.name && (
@@ -95,7 +105,8 @@ const CreateAccount: React.FC = () => {
               </label>
               <input
                 {...register("firstName")}
-                type="password"
+                type="text"
+                placeholder="apellido paterno"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.firstName && (
@@ -112,21 +123,6 @@ const CreateAccount: React.FC = () => {
                 {isSubmitting ? "Cargando..." : "Crea cuenta"}
               </button>
             </div>
-
-            {/* <input
-              {...register("password")}
-              type="password"
-              placeholder="Contraseña"
-            />
-            {errors.password && (
-              <div className="text-red-500">{errors.password.message}</div>
-            )}
-            <button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Loading..." : "Submit"}
-            </button>
-            {errors.root && (
-              <div className="text-red-500">{errors.root.message}</div>
-            )} */}
           </form>
         </section>
       </div>

@@ -3,10 +3,15 @@ import Header from "./Header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z
+    .string()
+    .email({ message: "Usa un correo institucional de la UAM válido" }),
+  password: z
+    .string()
+    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -22,13 +27,16 @@ const CreateAccount: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log(data);
+      navigate("/buscar-tutor");
     } catch (error) {
       setError("root", {
-        message: "This email is already taken",
+        message: "Tu correo y contraseña no son válidas",
       });
     }
   };
@@ -52,7 +60,7 @@ const CreateAccount: React.FC = () => {
               <input
                 {...register("email")}
                 type="text"
-                placeholder="Email"
+                placeholder="correo institucional"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.email && (
@@ -66,6 +74,7 @@ const CreateAccount: React.FC = () => {
               <input
                 {...register("password")}
                 type="password"
+                placeholder="contraseña"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
               {errors.password && (
@@ -82,21 +91,9 @@ const CreateAccount: React.FC = () => {
                 {isSubmitting ? "Cargando..." : "Iniciar sesión"}
               </button>
             </div>
-
-            {/* <input
-              {...register("password")}
-              type="password"
-              placeholder="Contraseña"
-            />
-            {errors.password && (
-              <div className="text-red-500">{errors.password.message}</div>
-            )}
-            <button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Loading..." : "Submit"}
-            </button>
             {errors.root && (
               <div className="text-red-500">{errors.root.message}</div>
-            )} */}
+            )}
           </form>
         </section>
       </div>

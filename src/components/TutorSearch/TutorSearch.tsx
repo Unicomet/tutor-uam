@@ -18,6 +18,11 @@ const TutorSearch: React.FC = () => {
         <SearchBar />
         <FilterSection />
         <TutorList />
+        <div className="join mx-auto mt-8">
+          <button className="join-item btn">«</button>
+          <button className="join-item btn">Page 1</button>
+          <button className="join-item btn">»</button>
+        </div>
       </main>
     </div>
   );
