@@ -93,7 +93,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -167,7 +166,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -199,7 +197,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -232,7 +229,6 @@ const TimeScheduler: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-[4rem]">
                 <input
-                  defaultChecked=""
                   id="wednesday"
                   name="days"
                   type="checkbox"
@@ -274,7 +270,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -306,7 +301,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -380,7 +374,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -412,7 +405,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -486,7 +478,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>
@@ -518,7 +509,6 @@ const TimeScheduler: React.FC = () => {
                     min="09:00"
                     max="18:00"
                     defaultValue="00:00"
-                    required=""
                   />
                 </div>
               </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import CancelMenu from "../../assets/icons/CancelMenu";
 import { BurgerMenu } from "../../assets/icons/BurgerMenu";
 import { Link } from "react-router-dom";
 const Header: React.FC = () => {

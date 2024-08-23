@@ -10,7 +10,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@builder.io/dev-tools": "^1.0.19",
@@ -20,6 +20,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
+    "vite-plugin-gh-pages": "^0.4.1",
+    "yarn": "^1.22.22",
     "zod": "^3.23.8"
   },
   "devDependencies": {

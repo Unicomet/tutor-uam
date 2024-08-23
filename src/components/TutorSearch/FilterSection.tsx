@@ -4,12 +4,12 @@
 import React from "react";
 
 const FilterSection: React.FC = () => {
-  const availabilityOptions = [
-    "Hoy",
-    "Mañana",
-    "Esta semana",
-    "Fines de semana",
-  ];
+  // const availabilityOptions = [
+  //   "Hoy",
+  //   "Mañana",
+  //   "Esta semana",
+  //   "Fines de semana",
+  // ];
 
   return (
     <section className="flex flex-col">

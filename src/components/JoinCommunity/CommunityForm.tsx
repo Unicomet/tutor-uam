@@ -18,15 +18,15 @@ const schema = z.object({
   }),
   //TODO: Make that the validation work for two types of schemas: for tutors and just students
 
-  // description: z.string().min(20, {
-  //   message: "Tienes que escribir más de 30 caracteres",
-  // }),
-  // educationLevel: z.enum(["licenciatura", "maestria", "doctorado"], {
-  //   message: "Tienes que seleccionar una opción",
-  // }),
-  // studyField: z.string().min(5, {
-  //   message: "Tienes que escribir tu campo de estudios, más de 5 caracteres",
-  // }),
+  description: z.string().min(20, {
+    message: "Tienes que escribir más de 30 caracteres",
+  }),
+  educationLevel: z.enum(["licenciatura", "maestria", "doctorado"], {
+    message: "Tienes que seleccionar una opción",
+  }),
+  studyField: z.string().min(5, {
+    message: "Tienes que escribir tu campo de estudios, más de 5 caracteres",
+  }),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -112,7 +112,7 @@ const RegistrateTutor: React.FC = () => {
               {...register("studyField")}
             />
 
-            {errors.educationLevel && (
+            {errors.studyField && (
               <div className="text-red-500">{errors.studyField?.message}</div>
             )}
           </div>
@@ -191,7 +191,7 @@ const RegistrateTutor: React.FC = () => {
                 Selecciona una opción
               </option>
               <option value="Darlas">Darlas</option>
-              <option value="Recibirlas">Recibirlas</option>
+              {/* <option value="Recibirlas">Recibirlas</option> */}
               <option value="Ambas">Ambas</option>
             </select>
             {errors.roleTutorship && (

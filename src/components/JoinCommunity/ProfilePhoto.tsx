@@ -10,13 +10,13 @@ const ProfilePhoto: React.FC = () => {
             id="profile-photo"
             className="hidden"
             accept=".png,.jpg,.jpeg,.webp,image/png"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              if (file) {
-                // Handle file upload here
-                console.log(file);
-              }
-            }}
+            // onChange={(e) => {
+            //   // const file: File | null  = e.target.files[0];
+            //   // if (file) {
+            //   //   // Handle file upload here
+            //   //   console.log(file);
+            //   // }
+            // }}
           />
           <div className="text-gray-500 text-center">Agrega una foto</div>
         </div>

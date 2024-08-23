@@ -1,4 +1,3 @@
-import { createRoot } from "react-dom/client";
 import "./App.css";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import Footer from "./components/Footer";
@@ -10,7 +9,7 @@ import RegistrateSubjects from "./components/RegistrateSubjects/RegistrateSubjec
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div id="page-container">
         <div id="content-wrap">
           <Routes>
