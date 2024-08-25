@@ -3,6 +3,8 @@
  */
 import React from "react";
 import { Button } from "../ui/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 interface TutorProps {
   tutor: {
@@ -25,7 +27,12 @@ const TutorCard: React.FC<TutorProps> = ({ tutor }) => {
         />
         <div className="flex flex-col justify-center my-auto">
           <div className="text-base font-medium text-zinc-900">
-            {tutor.name} • {tutor.rating}
+            {tutor.name} • {tutor.rating}{" "}
+            <FontAwesomeIcon
+              icon={faStar}
+              size="lg"
+              style={{ color: "#FFD43B" }}
+            />
           </div>
           <div className="text-sm text-slate-500">
             {tutor.languages.join(" • ")}

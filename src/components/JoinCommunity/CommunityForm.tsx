@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const schema = z.object({
   ocupation: z.enum(["Estudiante", "Profesor"], {
@@ -70,7 +71,7 @@ const RegistrateTutor: React.FC = () => {
             </label>
 
             <textarea
-              className="textarea textarea-bordered mt-4"
+              className="bg-slate-100 rounded p-2 mt-4"
               placeholder="Soy alguien apasionado por la ciencia y la enseñanza"
               {...register("description")}
             ></textarea>
@@ -86,7 +87,7 @@ const RegistrateTutor: React.FC = () => {
 
             <select
               {...register("educationLevel")}
-              className="select select-bordered select-md w-full mt-4 "
+              className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
             >
               <option value="admin" disabled selected>
                 Selecciona una opción
@@ -95,6 +96,7 @@ const RegistrateTutor: React.FC = () => {
               <option value="maestria">Maestría</option>
               <option value="doctorado">Doctorado</option>
             </select>
+
             {errors.educationLevel && (
               <div className="text-red-500">
                 {errors.educationLevel?.message}
@@ -108,7 +110,7 @@ const RegistrateTutor: React.FC = () => {
             <input
               type="text"
               placeholder="Ciencias de la computación"
-              className="input input-bordered w-full mt-4"
+              className="rounded-lg bg-slate-100 h-10 ps-2 w-full mt-4"
               {...register("studyField")}
             />
 
@@ -143,7 +145,7 @@ const RegistrateTutor: React.FC = () => {
 
             <select
               {...register("ocupation")}
-              className="select select-bordered select-md w-full  mt-4"
+              className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
             >
               <option value="admin" disabled selected>
                 Selecciona una ocupación
@@ -162,7 +164,7 @@ const RegistrateTutor: React.FC = () => {
 
             <select
               {...register("facultyUAM")}
-              className="select select-bordered select-md w-full mt-4 "
+              className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
             >
               <option value="admin" disabled selected>
                 Selecciona una unidad académica
@@ -185,13 +187,13 @@ const RegistrateTutor: React.FC = () => {
 
             <select
               {...register("roleTutorship")}
-              className="select select-bordered select-md w-full mt-4 "
+              className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
             >
               <option value="admin" disabled selected>
                 Selecciona una opción
               </option>
               <option value="Darlas">Darlas</option>
-              {/* <option value="Recibirlas">Recibirlas</option> */}
+              <option value="Recibirlas">Recibirlas</option>
               <option value="Ambas">Ambas</option>
             </select>
             {errors.roleTutorship && (
@@ -201,13 +203,13 @@ const RegistrateTutor: React.FC = () => {
           {roleTutorship && renderTutorForm()}
 
           <div className="flex flex-col justify-center px-4 py-3 mt-4 max-w-full text-sm font-bold text-center text-slate-50 w-[496px]">
-            <button
+            <Button
               disabled={isSubmitting}
               type="submit"
               className="btn bg-blue-600 text-white rounded-lg w-full "
             >
               {isSubmitting ? "Cargando..." : "Continuar"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
