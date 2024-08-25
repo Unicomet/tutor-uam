@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
 
 const schema = z.object({
   email: z
@@ -115,13 +116,13 @@ const CreateAccount: React.FC = () => {
             </div>
 
             <div className="flex flex-col justify-center px-4 py-3 mt-4 max-w-full text-sm font-bold text-center text-slate-50 w-[496px]">
-              <button
+              <Button
                 disabled={isSubmitting}
                 type="submit"
                 className="btn bg-blue-600 text-white rounded-lg w-full"
               >
                 {isSubmitting ? "Cargando..." : "Crea cuenta"}
-              </button>
+              </Button>
             </div>
           </form>
         </section>

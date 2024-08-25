@@ -3,6 +3,7 @@
  */
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 const Header: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Header: React.FC = () => {
         <div>Tutor UAM</div>
       </div>
       <Link to="../iniciar-sesion">
-        <button className="btn bg-blue-600 text-white">Iniciar sesión</button>
+        <Button className="btn bg-blue-600 text-white">Iniciar sesión</Button>
       </Link>
     </header>
   );

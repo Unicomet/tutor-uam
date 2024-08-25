@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../ui/button";
 
 const TimeScheduler: React.FC = () => {
   return (
@@ -97,10 +98,7 @@ const TimeScheduler: React.FC = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="button"
-                  className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                >
+                <Button className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100">
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
@@ -117,7 +115,7 @@ const TimeScheduler: React.FC = () => {
                     />
                   </svg>
                   <span className="sr-only">Delete</span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -201,10 +199,7 @@ const TimeScheduler: React.FC = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="button"
-                  className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                >
+                <Button className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100">
                   <svg
                     className="w-5 h-5"
                     aria-hidden="true"
@@ -221,7 +216,7 @@ const TimeScheduler: React.FC = () => {
                     />
                   </svg>
                   <span className="sr-only">Delete</span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -305,8 +300,8 @@ const TimeScheduler: React.FC = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="button"
+                <Button
+                  type="Button"
                   className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                 >
                   <svg
@@ -325,7 +320,7 @@ const TimeScheduler: React.FC = () => {
                     />
                   </svg>
                   <span className="sr-only">Delete</span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -409,8 +404,8 @@ const TimeScheduler: React.FC = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="button"
+                <Button
+                  type="Button"
                   className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                 >
                   <svg
@@ -429,7 +424,7 @@ const TimeScheduler: React.FC = () => {
                     />
                   </svg>
                   <span className="sr-only">Delete</span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -513,8 +508,8 @@ const TimeScheduler: React.FC = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="button"
+                <Button
+                  type="Button"
                   className="inline-flex items-center p-1.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                 >
                   <svg
@@ -533,12 +528,12 @@ const TimeScheduler: React.FC = () => {
                     />
                   </svg>
                   <span className="sr-only">Delete</span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>
-          {/* <button
-            type="button"
+          {/* <Button
+            type="Button"
             className="inline-flex items-center justify-center w-full py-2.5 mb-4 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
           >
             <svg
@@ -559,7 +554,7 @@ const TimeScheduler: React.FC = () => {
               />
             </svg>
             Añade un intervalo
-          </button> */}
+          </Button> */}
         </form>
       </div>
     </>

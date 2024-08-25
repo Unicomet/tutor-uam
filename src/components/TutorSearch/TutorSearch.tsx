@@ -6,6 +6,15 @@ import Header from "./Header";
 import SearchBar from "./SearchBar";
 import FilterSection from "./FilterSection";
 import TutorList from "./TutorList";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const TutorSearch: React.FC = () => {
   return (
@@ -15,15 +24,33 @@ const TutorSearch: React.FC = () => {
         <h1 className="text-3xl font-bold text-neutral-900 max-md:max-w-full">
           Encuentra un tutor
         </h1>
-        <SearchBar />
         <FilterSection />
         <TutorList />
-        <div className="join mx-auto mt-8">
-          <button className="join-item btn">«</button>
-          <button className="join-item btn">Page 1</button>
-          <button className="join-item btn">»</button>
-        </div>
       </main>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#" isActive>
+              2
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">3</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };

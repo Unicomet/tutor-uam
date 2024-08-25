@@ -2,12 +2,19 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer footer-center bg-base-200 text-base-content rounded p-7 mt-32">
-      <nav className="grid grid-flow-col gap-4">
-        <a className="link link-hover">Sobre nosotros</a>
-        <a className="link link-hover">Contacto</a>
+    <footer className="bg-slate-200 text-base-content rounded p-7 mt-32">
+      <nav className="flex justify-center gap-8">
+        <a className="link link-hover" href="">
+          Sobre nosotros
+        </a>
+        <a className="link link-hover" href="">
+          Contacto
+        </a>
       </nav>
-      <nav>
+      <p className="text-center mt-4">
+        Copyright © {new Date().getFullYear()} - Todos los derechos reservados
+      </p>
+      {/* <nav>
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg
@@ -43,13 +50,7 @@ const Footer: React.FC = () => {
             </svg>
           </a>
         </div>
-      </nav>
-      <aside>
-        <p>
-          Copyright © {new Date().getFullYear()} - Todos los derechos
-          reservados
-        </p>
-      </aside>
+      </nav> */}
     </footer>
   );
 };

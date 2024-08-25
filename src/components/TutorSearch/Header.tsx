@@ -1,6 +1,7 @@
 import React from "react";
 import { BurgerMenu } from "../../assets/icons/BurgerMenu";
 import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 const Header: React.FC = () => {
   return (
     <header className="flex justify-between self-stretch px-10 py-3 font-bold border-b border-gray-200 max-md:flex-wrap max-md:px-5">
@@ -14,17 +15,17 @@ const Header: React.FC = () => {
         <div>Tutor UAM</div>
       </div>
       <nav className="md:hidden ">
-        <button>
+        <Button>
           <BurgerMenu height={24} width={24} stroke="black" />
-        </button>
+        </Button>
       </nav>
 
       <nav className="hidden md:flex items-center justify-end gap-5 pl-20 text-sm leading-5 text-center max-md:flex-wrap ">
-        <button className="btn btn-sm">Mis clases</button>
+        <Button className="btn btn-sm">Mis clases</Button>
         <Link to="../crear-cuenta">
-          <button className="btn btn-sm bg-blue-600  text-white">
+          <Button className="btn btn-sm bg-blue-600  text-white">
             Conviértete en tutor
-          </button>
+          </Button>
         </Link>
 
         <img
