@@ -2,7 +2,10 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-200 text-base-content rounded p-7 mt-32">
+    <footer
+      className="bg-slate-200 text-base-content rounded flex flex-col gap-4 pt-6"
+      id="footer"
+    >
       <nav className="flex justify-center gap-8">
         <a className="link link-hover" href="">
           Sobre nosotros
@@ -11,7 +14,7 @@ const Footer: React.FC = () => {
           Contacto
         </a>
       </nav>
-      <p className="text-center mt-4">
+      <p className="text-center">
         Copyright © {new Date().getFullYear()} - Todos los derechos reservados
       </p>
       {/* <nav>

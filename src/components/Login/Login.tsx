@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const schema = z.object({
   email: z
@@ -18,6 +20,12 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 const Login: React.FC = () => {
+  const mutation = useMutation({
+    mutationFn: (loginRequest) => {
+      return axios.post("http://localhost:8080/auth/login", loginRequest);
+    },
+  });
+
   const {
     register,
     setError,
@@ -31,19 +39,26 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      navigate("/buscar-tutor");
-    } catch (error) {
-      setError("root", {
-        message: "Tu correo y contraseña no son válidas",
-      });
-    }
+    await mutation.mutate(data, {
+      onSuccess: () => {
+        navigate("/buscar-tutor");
+      },
+      onError: (error) => {
+        if (error.status === 401) {
+          setError("root", {
+            message: "Tu correo y contraseña no son válidas",
+          });
+        } else {
+          setError("root", {
+            message: error.message,
+          });
+        }
+      },
+    });
   };
 
   return (
-    <main className="flex flex-col justify-center">
+    <main className="flex flex-col justify-center ">
       <div className="flex flex-col w-full bg-white max-md:max-w-full">
         <Header />
         <section className="flex flex-col items-center px-20 py-5 w-full text-base max-md:px-5 max-md:max-w-full">

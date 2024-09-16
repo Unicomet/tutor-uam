@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const schema = z.object({
   email: z
@@ -13,13 +15,19 @@ const schema = z.object({
   password: z
     .string()
     .min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
-  name: z.string().min(3, { message: "Escribe un nombre válido" }),
-  firstName: z.string().min(3, { message: "Escribe un apellido válido" }),
+  firstName: z.string().min(3, { message: "Escribe un nombre válido" }),
+  lastName: z.string().min(3, { message: "Escribe un apellido válido" }),
 });
 
 type FormFields = z.infer<typeof schema>;
 
 const CreateAccount: React.FC = () => {
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post("http://localhost:8080/auth/register", data);
+    },
+  });
+
   const {
     register,
     setError,
@@ -33,15 +41,23 @@ const CreateAccount: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      navigate("/comunidad-formulario");
-    } catch (error) {
-      setError("root", {
-        message: "This email is already taken",
-      });
-    }
+    await mutation.mutate(data, {
+      onSuccess: (response) => {
+        localStorage.setItem("token", response.data.token);
+        navigate("/comunidad-formulario");
+      },
+      onError: (error) => {
+        if (error.status === 403) {
+          setError("root", {
+            message: "El correo ya ha sido utilizado",
+          });
+        } else {
+          setError("root", {
+            message: error.message,
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -90,13 +106,13 @@ const CreateAccount: React.FC = () => {
                 Nombre
               </label>
               <input
-                {...register("name")}
+                {...register("firstName")}
                 type="text"
                 placeholder="nombre"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
-              {errors.name && (
-                <div className="text-red-500">{errors.name.message}</div>
+              {errors.firstName && (
+                <div className="text-red-500">{errors.firstName.message}</div>
               )}
             </div>
 
@@ -105,13 +121,13 @@ const CreateAccount: React.FC = () => {
                 Apellido Paterno
               </label>
               <input
-                {...register("firstName")}
+                {...register("lastName")}
                 type="text"
                 placeholder="apellido paterno"
                 className="p-4 mt-2 rounded-xl bg-slate-200 text-slate-500 max-md:pr-5 max-md:max-w-full"
               />
-              {errors.firstName && (
-                <div className="text-red-500">{errors.firstName.message}</div>
+              {errors.lastName && (
+                <div className="text-red-500">{errors.lastName.message}</div>
               )}
             </div>
 
@@ -119,10 +135,13 @@ const CreateAccount: React.FC = () => {
               <Button
                 disabled={isSubmitting}
                 type="submit"
-                className="btn bg-blue-600 text-white rounded-lg w-full"
+                className="btn bg-blue-600 text-white rounded-lg w-full mb-4"
               >
                 {isSubmitting ? "Cargando..." : "Crea cuenta"}
               </Button>
+              {errors.root && (
+                <div className="text-red-500">{errors.root.message}</div>
+              )}
             </div>
           </form>
         </section>

@@ -2,9 +2,8 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TimeScheduler from "./TimeScheduler";
-import FilteredSearch from "./FilteredSearch";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useMutation } from "react-query";
@@ -25,18 +24,14 @@ const schema = z.object({
   availability: z.record(dayAvailabilitySchema, {
     message: "Tienes que seleccionar al menos un horario",
   }),
-  subjects: z
-    .array(z.string(), {
-      message: "Tienes que seleccionar al menos una materia",
-    })
-    .min(0, {
-      message: "Tienes que seleccionar al menos una materia",
-    }),
 });
 
 type FormFields = z.infer<typeof schema>;
 
-const RegistrateSubjects: React.FC = () => {
+const Scheduler: React.FC = () => {
+  let { tutorId } = useParams();
+  console.log(tutorId);
+
   const {
     register,
     setError,
@@ -50,7 +45,7 @@ const RegistrateSubjects: React.FC = () => {
 
   const mutation = useMutation({
     mutationFn: (data) => {
-      return axios.post("http://localhost:8080/subjects", data, {
+      return axios.post("http://localhost:8080/schedule/" + tutorId, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -87,15 +82,6 @@ const RegistrateSubjects: React.FC = () => {
       >
         <label className="mb-4 text-xl font-semibold">Seleciona materias</label>
 
-        <FilteredSearch
-          name="subjects"
-          items={subjects}
-          placeholder="Selecciona tus materias"
-          register={register}
-          setValue={setValue}
-          errors={errors.subjects}
-        />
-
         <TimeScheduler
           name="availability"
           register={register}
@@ -115,4 +101,4 @@ const RegistrateSubjects: React.FC = () => {
   );
 };
 
-export default RegistrateSubjects;
+export default Scheduler;

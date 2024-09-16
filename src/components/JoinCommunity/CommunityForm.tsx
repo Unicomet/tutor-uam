@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useMutation } from "react-query";
 
 const schema = z.object({
   ocupation: z.enum(["Estudiante", "Profesor"], {
@@ -14,15 +16,14 @@ const schema = z.object({
     ["Azcapotzalco", "Lerma", "Cuajimalpa", "Iztapalapa", "Xochimilco"],
     { message: "Tienes que seleccionar una unidad" }
   ),
-  roleTutorship: z.enum(["Darlas", "Recibirlas", "Ambas"], {
+  roleTutorship: z.enum(["Asesor", "Asesorado"], {
     message: "Tienes que seleccionar una opción",
   }),
   //TODO: Make that the validation work for two types of schemas: for tutors and just students
-
   description: z.string().min(20, {
     message: "Tienes que escribir más de 30 caracteres",
   }),
-  educationLevel: z.enum(["licenciatura", "maestria", "doctorado"], {
+  educationLevel: z.enum(["Licenciatura", "Maestría", "Doctorado"], {
     message: "Tienes que seleccionar una opción",
   }),
   studyField: z.string().min(5, {
@@ -44,25 +45,47 @@ const RegistrateTutor: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post(
+        "http://localhost:8080/users/registro-comunidad",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    },
+  });
+
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      data.roleTutorship === "Recibirlas"
-        ? navigate("/buscar-tutor")
-        : navigate("/registro-tutor");
-    } catch (error) {
-      setError("root", {
-        message: "Este correo ya está utilizado por otra",
-      });
-    }
+    await mutation.mutate(data, {
+      onSuccess: () => {
+        console.log(data);
+        data.roleTutorship === "Asesorado"
+          ? navigate("/buscar-tutor")
+          : navigate("/registro-materias-disponibilidad");
+      },
+      onError: (error) => {
+        if (error.status === 401) {
+          setError("root", {
+            message: "Tu correo y contraseña no son válidas",
+          });
+        } else {
+          setError("root", {
+            message: error.message,
+          });
+        }
+      },
+    });
   };
   const roleTutorship = watch("roleTutorship");
 
   const renderTutorForm = () => {
-    if (roleTutorship === "Darlas" || roleTutorship === "Ambas") {
+    if (roleTutorship === "Asesor") {
       return (
         <>
           <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
@@ -92,9 +115,9 @@ const RegistrateTutor: React.FC = () => {
               <option value="admin" disabled selected>
                 Selecciona una opción
               </option>
-              <option value="licenciatura">Licenciatura</option>
-              <option value="maestria">Maestría</option>
-              <option value="doctorado">Doctorado</option>
+              <option value="Licenciatura">Licenciatura</option>
+              <option value="Maestría">Maestría</option>
+              <option value="Doctorado">Doctorado</option>
             </select>
 
             {errors.educationLevel && (
@@ -109,7 +132,7 @@ const RegistrateTutor: React.FC = () => {
             </label>
             <input
               type="text"
-              placeholder="Ciencias de la computación"
+              placeholder="Ej. Ciencias de la computación"
               className="rounded-lg bg-slate-100 h-10 ps-2 w-full mt-4"
               {...register("studyField")}
             />
@@ -192,9 +215,9 @@ const RegistrateTutor: React.FC = () => {
               <option value="admin" disabled selected>
                 Selecciona una opción
               </option>
-              <option value="Darlas">Darlas</option>
-              <option value="Recibirlas">Recibirlas</option>
-              <option value="Ambas">Ambas</option>
+              <option value="Asesor">Darlas</option>
+              <option value="Asesorado">Recibirlas</option>
+              {/* <option value="Ambas">Ambas</option> */}
             </select>
             {errors.roleTutorship && (
               <div className="text-red-500">{errors.roleTutorship.message}</div>
@@ -212,6 +235,9 @@ const RegistrateTutor: React.FC = () => {
             </Button>
           </div>
         </form>
+        {errors.root && (
+          <p className="text-red-500 text-center">{errors.root?.message}</p>
+        )}
       </div>
     </main>
   );

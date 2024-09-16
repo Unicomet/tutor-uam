@@ -14,7 +14,7 @@ const FilterSection: React.FC = () => {
   //   "Fines de semana",
   // ];
   const subjects = [
-    "Mamte",
+    "Matemáticas",
     "Mecanica",
     "Memo",
     "Memo2",
@@ -31,7 +31,7 @@ const FilterSection: React.FC = () => {
       <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full mb-4">
         Filtrar por materia
       </h2>
-      <FilteredSearch placeholder="Busca la materia" items={subjects} />
+      <FilteredSearch name="" placeholder="Busca la materia" items={subjects} />
       {/* <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full">
         Filtrar por disponibilidad
       </h2>

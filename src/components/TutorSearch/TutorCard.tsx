@@ -5,13 +5,15 @@ import React from "react";
 import { Button } from "../ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
 
 interface TutorProps {
   tutor: {
+    id: number;
     name: string;
-    rating: number;
-    languages: string[];
-    image: string;
+    score: number;
+    subjectNames: string[];
+    // image: string;
   };
 }
 
@@ -21,13 +23,13 @@ const TutorCard: React.FC<TutorProps> = ({ tutor }) => {
       <div className="flex gap-4">
         <img
           loading="lazy"
-          src={tutor.image}
+          // src={tutor.image}
           className="shrink-0 w-14 aspect-square"
           alt={`${tutor.name}'s profile`}
         />
         <div className="flex flex-col justify-center my-auto">
           <div className="text-base font-medium text-zinc-900">
-            {tutor.name} • {tutor.rating}{" "}
+            {tutor.name} • {tutor.score}{" "}
             <FontAwesomeIcon
               icon={faStar}
               size="lg"
@@ -35,13 +37,15 @@ const TutorCard: React.FC<TutorProps> = ({ tutor }) => {
             />
           </div>
           <div className="text-sm text-slate-500">
-            {tutor.languages.join(" • ")}
+            {tutor.subjectNames.join(" • ")}
           </div>
         </div>
       </div>
-      <Button className="btn btn-sm text-white my-auto bg-blue-600 ">
-        Agendar
-      </Button>
+      <NavLink to={"/agendar/" + tutor.id}>
+        <Button className="btn btn-sm text-white my-auto bg-blue-600">
+          Agendar
+        </Button>
+      </NavLink>
     </div>
   );
 };
