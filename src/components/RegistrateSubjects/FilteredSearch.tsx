@@ -12,19 +12,21 @@ interface FilteredSearchProps {
   name: Path<FieldValues>;
   items: string[];
   placeholder: string;
-  register: UseFormRegister<any>;
-  setValue: UseFormSetValue<any>;
-  errors: any;
+  setValue?: UseFormSetValue<any>;
+  errors?: any;
+  setSubject?: Function;
+  usesForm: boolean;
 }
 
-export default function FilteredSearch({
+const FilteredSearch: React.FC<FilteredSearchProps> = ({
   name,
   items,
   placeholder,
-  register,
   setValue,
   errors,
-}: FilteredSearchProps) {
+  setSubject,
+  usesForm,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -45,12 +47,22 @@ export default function FilteredSearch({
   const handleItemSelect = (item: string) => {
     setSelectedItems([...selectedItems, item]);
     setSearchTerm("");
-    setValue(name, [...selectedItems, item]);
+    if (setSubject) {
+      setSubject(item);
+    }
+    if (usesForm) {
+      setValue(name, [...selectedItems, item]);
+    }
   };
 
   const handleItemRemove = (item: string) => {
     setSelectedItems(selectedItems.filter((i) => i !== item));
-    setValue(name, [...selectedItems, item]);
+    if (setSubject) {
+      setSubject(item);
+    }
+    if (usesForm) {
+      setValue(name, [...selectedItems, item]);
+    }
   };
 
   return (
@@ -67,7 +79,6 @@ export default function FilteredSearch({
           <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-60 overflow-auto">
             {filteredItems.map((item) => (
               <li
-                {...register(name)}
                 key={item}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleItemSelect(item)}
@@ -92,4 +103,6 @@ export default function FilteredSearch({
       {errors && <p className="text-red-500">{errors?.message}</p>}
     </div>
   );
-}
+};
+
+export default FilteredSearch;

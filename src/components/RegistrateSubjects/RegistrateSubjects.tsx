@@ -88,6 +88,7 @@ const RegistrateSubjects: React.FC = () => {
         <label className="mb-4 text-xl font-semibold">Seleciona materias</label>
 
         <FilteredSearch
+          usesForm={true}
           name="subjects"
           items={subjects}
           placeholder="Selecciona tus materias"

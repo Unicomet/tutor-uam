@@ -7,7 +7,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CommunityForm from "./components/JoinCommunity/CommunityForm";
 import RegistrateSubjects from "./components/RegistrateSubjects/RegistrateSubjects";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Scheduler from "./components/Schedule/RegistrateSubjects";
+import Scheduler from "./components/Schedule/Scheduler";
+import MyTutorships from "./components/MyTutorships";
+import FeedbackForm from "./components/FeedbackSession/FeedbackForm";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,11 @@ const App = () => {
                 element={<RegistrateSubjects />}
               />
               <Route path="/agendar/:tutorId" element={<Scheduler />} />
+              <Route path="/mis-asesorias" element={<MyTutorships />} />
+              <Route
+                path="/calificar-asesoria/:asesoriaId"
+                element={<FeedbackForm />}
+              />
             </Routes>
           </div>
           <Footer />

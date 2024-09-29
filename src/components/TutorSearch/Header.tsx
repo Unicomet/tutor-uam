@@ -21,7 +21,9 @@ const Header: React.FC = () => {
       </nav>
 
       <nav className="hidden md:flex items-center justify-end gap-5 pl-20 text-sm leading-5 text-center max-md:flex-wrap ">
-        <Button className="btn btn-sm">Mis clases</Button>
+        <Link to="../mis-asesorias">
+          <Button className="btn btn-sm">Mis asesorías</Button>
+        </Link>
         <Link to="../crear-cuenta">
           <Button className="btn btn-sm bg-blue-600  text-white">
             Conviértete en tutor
