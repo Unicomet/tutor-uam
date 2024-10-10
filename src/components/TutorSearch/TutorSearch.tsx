@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Header from "./Header";
+import Header from "../Header";
 import FilterSection from "./FilterSection";
 import TutorList from "./TutorList";
 import { useQuery } from "react-query";
 import getTutors from "@/api/getTutors";
 import { PageSection } from "./PageSection";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
 const TutorSearch: React.FC = () => {
   const [name, setName] = useState("");
@@ -22,7 +23,7 @@ const TutorSearch: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center bg-white w-full mb-16">
-      <Header />
+      <Header routes={["mis-asesorias"]} textButton={["Mis asesorías"]} />
       <main className="flex flex-col px-3.5 mt-9 w-full max-w-[960px] mx-auto">
         <h1 className="text-3xl font-bold text-neutral-900 max-md:max-w-full">
           Encuentra un tutor
@@ -34,6 +35,7 @@ const TutorSearch: React.FC = () => {
             setSubject(subject);
           }}
         />
+
         {isLoading ? (
           <div>Cargando...</div>
         ) : error ? (

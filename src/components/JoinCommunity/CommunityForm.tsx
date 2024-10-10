@@ -20,15 +20,24 @@ const schema = z.object({
     message: "Tienes que seleccionar una opción",
   }),
   //TODO: Make that the validation work for two types of schemas: for tutors and just students
-  description: z.string().min(20, {
-    message: "Tienes que escribir más de 30 caracteres",
-  }),
-  educationLevel: z.enum(["Licenciatura", "Maestría", "Doctorado"], {
-    message: "Tienes que seleccionar una opción",
-  }),
-  studyField: z.string().min(5, {
-    message: "Tienes que escribir tu campo de estudios, más de 5 caracteres",
-  }),
+  description: z
+    .string()
+    .min(20, {
+      message: "Tienes que escribir más de 30 caracteres",
+    })
+    .optional(),
+  educationLevel: z
+    .enum(["Licenciatura", "Maestría", "Doctorado"], {
+      message: "Tienes que seleccionar una opción",
+    })
+    .optional(),
+  studyField: z
+    .string()
+    .min(5, {
+      message: "Tienes que escribir tu campo de estudios, más de 5 caracteres",
+    })
+    .optional(),
+  tutorshipPlace: z.string().min(3).optional(),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -65,6 +74,10 @@ const RegistrateTutor: React.FC = () => {
     await mutation.mutate(data, {
       onSuccess: () => {
         console.log(data);
+        localStorage.setItem(
+          "isTutor",
+          data.roleTutorship === "Asesor" ? "true" : "false"
+        );
         data.roleTutorship === "Asesorado"
           ? navigate("/buscar-tutor")
           : navigate("/registro-materias-disponibilidad");
@@ -141,6 +154,23 @@ const RegistrateTutor: React.FC = () => {
               <div className="text-red-500">{errors.studyField?.message}</div>
             )}
           </div>
+          <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
+            <label className="font-medium text-zinc-900 max-md:max-w-full">
+              Lugar donde darás asesorias
+            </label>
+            <input
+              type="text"
+              placeholder="Ej. Cubículo H-101"
+              className="rounded-lg bg-slate-100 h-10 ps-2 w-full mt-4"
+              {...register("tutorshipPlace")}
+            />
+
+            {errors.tutorshipPlace && (
+              <div className="text-red-500">
+                {errors.tutorshipPlace?.message}
+              </div>
+            )}
+          </div>
         </>
       );
     }
@@ -159,7 +189,7 @@ const RegistrateTutor: React.FC = () => {
           className="flex flex-col items-center w-full max-w-[480px] "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <ProfilePhoto />
+          {/* <ProfilePhoto /> */}
 
           <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
             <label className="font-medium text-zinc-900 max-md:max-w-full">

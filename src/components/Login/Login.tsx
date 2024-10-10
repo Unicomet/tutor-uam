@@ -40,8 +40,16 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     await mutation.mutate(data, {
-      onSuccess: () => {
-        navigate("/buscar-tutor");
+      onSuccess: (response) => {
+        console.log(response);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("isTutor", response.data.isTutor);
+
+        if (response.data.isTutor) {
+          navigate("/mis-asesorias-tutor");
+        } else {
+          navigate("/buscar-tutor");
+        }
       },
       onError: (error) => {
         if (error.status === 401) {

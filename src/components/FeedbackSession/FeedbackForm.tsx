@@ -11,14 +11,31 @@ export default function FeedbackForm() {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const isTutor = localStorage.getItem("isTutor");
 
   const SubmitReviewMutation = useMutation({
     mutationFn: (data) => {
-      return axios.post("http://localhost:8080/tutorships/evaluate", data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      if (isTutor) {
+        return axios.post(
+          "http://localhost:8080/tutorships/evaluate-tutoree",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+      } else {
+        return axios.post(
+          "http://localhost:8080/tutorships/evaluate-tutor",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+      }
     },
   });
 
@@ -40,7 +57,11 @@ export default function FeedbackForm() {
     console.log(data);
     await SubmitReviewMutation.mutate(data, {
       onSuccess: () => {
-        navigate("/buscar-tutor");
+        if (isTutor) {
+          navigate("/mis-asesorias-tutor");
+        } else {
+          navigate("/buscar-tutor");
+        }
       },
       onError: (error) => {
         console.error(error);

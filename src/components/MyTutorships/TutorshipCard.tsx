@@ -3,9 +3,10 @@ import { Button } from "../ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
-interface TutorProps {
-  tutor: {
+interface TutorshipCardProps {
+  person: {
     name: string;
     score: number;
     // image: string;
@@ -19,30 +20,40 @@ interface TutorProps {
   };
 }
 
-const TutorshipCard: React.FC<TutorProps> = ({ tutor, tutorship }) => {
+const TutorshipCard: React.FC<TutorshipCardProps> = ({ person, tutorship }) => {
   const dateTime: Date = new Date(tutorship.dateTime);
+  console.log(tutorship);
 
   return (
-    <div className="flex gap-4 justify-between mt-4  px-4 py-2 w-full bg-slate-50 max-md:flex-wrap max-md:max-w-full">
+    <div className="flex gap-4 justify-between items-center mt-5  px-4 py-2 w-full md:h-20 bg-slate-50 max-md:flex-wrap max-md:max-w-full">
       <div className="flex gap-4">
-        <img
-          loading="lazy"
-          // src={tutor.image}
-          className="shrink-0 w-14 aspect-square"
-          alt={`${tutor.name}'s profile`}
-        />
+        <Avatar className="flex justify-center items-center bg-slate-400 w-12 h-12 rounded-full p-2">
+          {/* <AvatarImage
+            src="/placeholder.svg?height=32&width=32"
+            alt="User Avatar"
+          /> */}
+          <AvatarFallback>
+            {person.user.firstName[0] + person.user.lastName[0]}
+          </AvatarFallback>
+        </Avatar>
         <div className="flex flex-col justify-center my-auto">
           <div className="text-base font-medium text-zinc-900">
-            {tutor.name} • {tutor.score}{" "}
+            {person.user.firstName + " " + person.user.lastName} •{" "}
+            {person.score}{" "}
             <FontAwesomeIcon
               icon={faStar}
               size="lg"
               style={{ color: "#FFD43B" }}
             />
           </div>
-          <div className="text-sm text-slate-500">
+          <div className="text-sm flex gap-2 text-slate-500">
             {dateTime.toISOString().split("T")[0]} a las{" "}
-            {dateTime.toTimeString().split(" ")[0]} • {tutorship.place}
+            {dateTime.toTimeString().split(" ")[0]} •{" "}
+            {tutorship.isTutorshipInPerson === true ? (
+              <p> Lugar: {tutorship.tutor.tutorshipPlace} </p>
+            ) : (
+              <p>En línea</p>
+            )}
           </div>
         </div>
       </div>

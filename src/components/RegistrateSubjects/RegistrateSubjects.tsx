@@ -8,6 +8,7 @@ import FilteredSearch from "./FilteredSearch";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useMutation } from "react-query";
+import { keysUEA, namesUEA } from "@/data/ueas";
 
 const timeSlotSchema = z.object({
   start: z.string(),
@@ -74,8 +75,6 @@ const RegistrateSubjects: React.FC = () => {
     });
   };
 
-  const subjects = ["Matemáticas", "Ciencia", "Memo", "Memo2", "Español"];
-
   return (
     <main className="flex flex-col items-center py-5 mx-4 text-base max-w-[960px] text-zinc-900  mt-12 md:mx-auto">
       <header className="text-3xl font-bold  max-md:max-w-full ">
@@ -90,7 +89,7 @@ const RegistrateSubjects: React.FC = () => {
         <FilteredSearch
           usesForm={true}
           name="subjects"
-          items={subjects}
+          items={namesUEA}
           placeholder="Selecciona tus materias"
           register={register}
           setValue={setValue}

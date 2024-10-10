@@ -1,5 +1,5 @@
-import React from "react";
-import Header from "../EditProfile/Header";
+import React, { useEffect, useState } from "react";
+import Header from "../Header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,24 +7,32 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { is } from "date-fns/locale";
 
-const schema = z.object({
-  email: z
-    .string()
-    .email({ message: "Usa un correo institucional de la UAM válido" }),
-  password: z
-    .string()
-    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
-  firstName: z.string().min(3, { message: "Escribe un nombre válido" }),
-  lastName: z.string().min(3, { message: "Escribe un apellido válido" }),
-});
+// const schema = z.object({
+//   firstName: z.string().min(3, { message: "Escribe un nombre válido" }),
+//   lastName: z.string().min(3, { message: "Escribe un apellido válido" }),
+//   ocupation: z.enum(["Estudiante", "Profesor"], {
+//     message: "Tienes que seleccionar una ocupación",
+//   }),
+//   facultyUAM: z.enum(
+//     ["Azcapotzalco", "Lerma", "Cuajimalpa", "Iztapalapa", "Xochimilco"],
+//     {
+//       message: "Tienes que seleccionar una unidad académica",
+//     }
+//   ),
+// });
 
-type FormFields = z.infer<typeof schema>;
+// type FormFields = z.infer<typeof schema>;
 
-const CreateAccount: React.FC = () => {
+const EditProfile: React.FC = () => {
   const mutation = useMutation({
     mutationFn: (data) => {
-      return axios.post("http://localhost:8080/auth/register", data);
+      return axios.patch("http://localhost:8080/users", data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
     },
   });
 
@@ -32,24 +40,38 @@ const CreateAccount: React.FC = () => {
     register,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormFields>({
-    defaultValues: {},
-    resolver: zodResolver(schema),
+    watch,
+    formState: { errors, isSubmitting, dirtyFields },
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+    },
   });
 
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    await mutation.mutate(data, {
-      onSuccess: (response) => {
-        localStorage.setItem("token", response.data.token);
-        navigate("/comunidad-formulario");
+    const editedData = {};
+    // Only include fields that have been edited
+    Object.keys(dirtyFields).forEach((field) => {
+      editedData[field] = data[field];
+    });
+
+    console.log(editedData);
+
+    await mutation.mutate(editedData, {
+      onSuccess: () => {
+        if (localStorage.getItem("isTutor") === "true") {
+          navigate("/mis-asesorias");
+        } else {
+          navigate("/buscar-tutor");
+        }
       },
       onError: (error) => {
         if (error.status === 403) {
           setError("root", {
-            message: "El correo ya ha sido utilizado",
+            message: "Los datos que ingresaste son incorrectos",
           });
         } else {
           setError("root", {
@@ -63,16 +85,16 @@ const CreateAccount: React.FC = () => {
   return (
     <main className="flex flex-col justify-center">
       <div className="flex flex-col w-full bg-white max-md:max-w-full">
-        <Header />
+        <Header routes={[]} textButton={[]} />
         <section className="flex flex-col items-center px-20 py-5 w-full text-base max-md:px-5 max-md:max-w-full">
           <h1 className="px-4 pt-5 pb-2 text-2xl font-bold text-center text-zinc-900 max-md:max-w-full">
-            Crear una cuenta
+            Edita los datos de cuenta
           </h1>
           <form
             className="flex flex-col items-center w-full max-w-[480px] mt-4"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
+            {/* <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
               <label className="font-medium text-zinc-900 max-md:max-w-full">
                 Correo Electrónico
               </label>
@@ -99,7 +121,7 @@ const CreateAccount: React.FC = () => {
               {errors.password && (
                 <div className="text-red-500">{errors.password.message}</div>
               )}
-            </div>
+            </div> */}
 
             <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
               <label className="font-medium text-zinc-900 max-md:max-w-full">
@@ -131,13 +153,55 @@ const CreateAccount: React.FC = () => {
               )}
             </div>
 
+            <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
+              <label className="font-medium text-zinc-900 max-md:max-w-full">
+                Ocupación
+              </label>
+
+              <select
+                {...register("ocupation")}
+                className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
+              >
+                <option value="admin" disabled selected>
+                  Selecciona una ocupación
+                </option>
+                <option value="Estudiante">Estudiante</option>
+                <option value="Profesor">Profesor</option>
+              </select>
+              {errors.ocupation && (
+                <div className="text-red-500">{errors.ocupation?.message}</div>
+              )}
+            </div>
+            <div className="flex flex-col px-4 py-3 max-w-full w-[480px]">
+              <label className="font-medium text-zinc-900 max-md:max-w-full">
+                Unidad UAM
+              </label>
+
+              <select
+                {...register("faculty")}
+                className="rounded-lg h-10 p-2 bg-slate-100 select-md w-full mt-4"
+              >
+                <option value="admin" disabled selected>
+                  Selecciona una unidad académica
+                </option>
+                <option value="Azcapotzalco">Azcapotzalco</option>
+                <option value="Azcapotzalco">Lerma</option>
+                <option value="Azcapotzalco">Cuajimalpa</option>
+                <option value="Azcapotzalco">Iztapalapa</option>
+                <option value="Cuajimalpa">Xochimilco</option>
+              </select>
+              {errors.faculty && (
+                <div className="text-red-500">{errors.faculty.message}</div>
+              )}
+            </div>
+
             <div className="flex flex-col justify-center px-4 py-3 mt-4 max-w-full text-sm font-bold text-center text-slate-50 w-[496px]">
               <Button
                 disabled={isSubmitting}
                 type="submit"
                 className="btn bg-blue-600 text-white rounded-lg w-full mb-4"
               >
-                {isSubmitting ? "Cargando..." : "Crea cuenta"}
+                {isSubmitting ? "Cargando..." : "Editar datos"}
               </Button>
               {errors.root && (
                 <div className="text-red-500">{errors.root.message}</div>
@@ -150,4 +214,4 @@ const CreateAccount: React.FC = () => {
   );
 };
 
-export default CreateAccount;
+export default EditProfile;

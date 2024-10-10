@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import FilteredSearch from "../RegistrateSubjects/FilteredSearch";
 import SearchBar from "./SearchBar";
+import { keysUEA, namesUEA } from "@/data/ueas";
 
 const FilterSection: React.FC = ({ onButtonPressed }) => {
   // const availabilityOptions = [
@@ -34,7 +35,7 @@ const FilterSection: React.FC = ({ onButtonPressed }) => {
       <FilteredSearch
         name=""
         placeholder="Busca la materia"
-        items={subjects}
+        items={namesUEA}
         setSubject={setSubject}
       />
       {/* <h2 className="mt-7 text-lg font-bold leading-6 text-neutral-900 max-md:max-w-full">

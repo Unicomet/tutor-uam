@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  FieldValues,
-  Path,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
 
 interface FilteredSearchProps {
   name: Path<FieldValues>;

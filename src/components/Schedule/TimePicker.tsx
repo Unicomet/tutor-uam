@@ -56,7 +56,7 @@ export default function TimePicker({
         <SelectTrigger className="w-full">
           <div className="flex items-center">
             <Clock className="mr-2 h-4 w-4 opacity-50" />
-            <SelectValue placeholder="Select a time" />
+            <SelectValue placeholder="Selecciona una hora" />
           </div>
         </SelectTrigger>
         <SelectContent>
